@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "title": "Software Engineer at Google",
+        "type": "Full-time",
+        "companyName": "Google",
+        "locationType": "Remote",
+        "location": "Mountain View, California, United States",
+        "applicationEmail": "",
+        "applicationUrl": "https://careers.google.com/jobs/results/1234567890/software-engineer/",
+        "slug": "software-engineer-at-google-1",
+        "salary": 120000,
+        "approved": true,
+        "description": "We are looking for a Software Engineer to join our team. You will be responsible for designing, developing, and maintaining software applications. The ideal candidate should have experience in Java, Python, or C++ and a strong understanding of algorithms and data structures.",
+        "createdAt": "2023-10-01T12:00:00Z",
+        "updatedAt": "2023-10-01T12:00:00Z"
+    }
+]
