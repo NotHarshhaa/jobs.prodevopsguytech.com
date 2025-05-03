@@ -27,7 +27,7 @@ export default function JobListItem({ job }: JobListItemProps) {
     : job.applicationUrl;
 
   return (
-    <article className="flex gap-3 rounded-lg border p-5 hover:bg-muted/60 transition">
+    <article className="flex flex-col sm:flex-row gap-3 rounded-lg border p-5 hover:bg-muted/60 transition">
       <Image
         src={companyLogoPlaceholder}
         alt="Company logo"
@@ -38,13 +38,13 @@ export default function JobListItem({ job }: JobListItemProps) {
 
       <div className="flex-grow space-y-4">
         {/* Header: title + apply button */}
-        <div className="flex items-start justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-0">
           <div>
             <h2 className="text-xl font-semibold">{job.title}</h2>
             <p className="text-muted-foreground">{job.companyName}</p>
           </div>
           {applyLink && (
-            <Button asChild className="ml-4">
+            <Button asChild className="w-full sm:w-auto">
               <a href={applyLink} target="_blank" rel="noopener noreferrer">
                 Apply Now
               </a>
