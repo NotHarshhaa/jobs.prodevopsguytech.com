@@ -6,7 +6,6 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Select } from "@/components/ui/select";
 
-// Mock or static data for locations (replace this with a static list if needed)
 const distinctLocations = [
   "Andhra Pradesh",
   "Telegana",
@@ -44,60 +43,67 @@ export default async function JobFilterSidebar({
   defaultValues,
 }: JobFilterSidebarProps) {
   return (
-    <aside className="sticky top-0 h-fit rounded-lg border bg-background p-4 md:w-[260px]">
-      <form action={filterJobs} key={JSON.stringify(defaultValues)}>
-        <div className="space-y-4">
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="q">Search</Label>
-            <Input
-              id="q"
-              name="q"
-              placeholder="Title, company, etc."
-              defaultValue={defaultValues.q}
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="type">Type</Label>
-            <Select
-              id="type"
-              name="type"
-              defaultValue={defaultValues.type || ""}
-            >
-              <option value="">All types</option>
-              {jobTypes.map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </Select>
-          </div>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="location">Location</Label>
-            <Select
-              id="location"
-              name="location"
-              defaultValue={defaultValues.location || ""}
-            >
-              <option value="">All locations</option>
-              {distinctLocations.map((location) => (
-                <option key={location} value={location}>
-                  {location}
-                </option>
-              ))}
-            </Select>
-          </div>
-          <div className="flex items-center gap-2">
-            <input
-              id="remote"
-              name="remote"
-              type="checkbox"
-              className="scale-125 accent-black"
-              defaultChecked={defaultValues.remote}
-            />
-            <Label htmlFor="remote">Remote jobs</Label>
-          </div>
-          <FormSubmitButton className="w-full">Filter jobs</FormSubmitButton>
+    <aside className="w-full md:sticky md:top-4 md:w-[260px] rounded-xl border border-muted bg-background p-4 shadow-sm">
+      <form action={filterJobs} key={JSON.stringify(defaultValues)} className="space-y-5">
+        <div className="space-y-2">
+          <Label htmlFor="q">Search</Label>
+          <Input
+            id="q"
+            name="q"
+            placeholder="Title, company, etc."
+            defaultValue={defaultValues.q}
+            className="w-full"
+          />
         </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="type">Type</Label>
+          <Select
+            id="type"
+            name="type"
+            defaultValue={defaultValues.type || ""}
+            className="w-full"
+          >
+            <option value="">All types</option>
+            {jobTypes.map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="location">Location</Label>
+          <Select
+            id="location"
+            name="location"
+            defaultValue={defaultValues.location || ""}
+            className="w-full"
+          >
+            <option value="">All locations</option>
+            {distinctLocations.map((location) => (
+              <option key={location} value={location}>
+                {location}
+              </option>
+            ))}
+          </Select>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <input
+            id="remote"
+            name="remote"
+            type="checkbox"
+            className="scale-125 accent-black"
+            defaultChecked={defaultValues.remote}
+          />
+          <Label htmlFor="remote">Remote jobs</Label>
+        </div>
+
+        <FormSubmitButton className="w-full text-white font-medium">
+          Filter jobs
+        </FormSubmitButton>
       </form>
     </aside>
   );
