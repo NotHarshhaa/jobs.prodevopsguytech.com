@@ -18,10 +18,10 @@ function getTitle({ q, type, location, remote }: JobFilterValues) {
   const titlePrefix = q
     ? `${q} jobs`
     : type
-      ? `${type} DevOps/Cloud Jobs`
+      ? `${type} DevOps/Cloud Jobs (Coming Soon)`
       : remote
-        ? "Remote DevOps/Cloud Jobs"
-        : "All DevOps/Cloud Jobs";
+        ? "Remote DevOps/Cloud Jobs (Coming Soon)"
+        : "All DevOps/Cloud Jobs (Coming Soon)";
 
   const titleSuffix = location ? ` in ${location}` : "";
 
