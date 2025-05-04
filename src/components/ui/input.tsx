@@ -1,9 +1,9 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
-  icon?: React.ReactNode
+  icon?: React.ReactNode;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -11,25 +11,29 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div
         className={cn(
-          "relative flex items-center rounded-2xl border border-input bg-background px-3 py-2 shadow-sm transition-all focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50",
+          "relative flex items-center gap-2 rounded-2xl border border-gray-300 dark:border-gray-700 bg-white/60 dark:bg-black/30 px-4 py-2 transition-all shadow-sm hover:shadow-md focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 focus-within:ring-offset-background",
+          "backdrop-blur-md disabled:cursor-not-allowed disabled:opacity-50",
           className
         )}
       >
-        {icon && <span className="mr-2 text-muted-foreground">{icon}</span>}
+        {icon && (
+          <span className="text-gray-500 dark:text-gray-400 text-base">
+            {icon}
+          </span>
+        )}
         <input
           type={type}
-          className={cn(
-            "w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
-            icon ? "pl-0" : "pl-1"
-          )}
           ref={ref}
           {...props}
+          className={cn(
+            "w-full border-none bg-transparent text-sm text-gray-800 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+          )}
         />
       </div>
-    )
+    );
   }
-)
+);
 
-Input.displayName = "Input"
+Input.displayName = "Input";
 
-export { Input }
+export { Input };
