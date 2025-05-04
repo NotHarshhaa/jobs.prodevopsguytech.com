@@ -15,7 +15,7 @@ export default function Footer() {
           w-full max-w-[95%] sm:max-w-4xl mx-auto
           bg-gradient-to-br from-white/30 to-gray-100/10 dark:from-black/30 dark:to-gray-900/10
           backdrop-blur-xl
-          rounded-xl sm:rounded-2xl shadow-md sm:shadow-lg
+          rounded-2xl sm:rounded-3xl shadow-md sm:shadow-lg
           px-4 py-4 sm:px-8 sm:py-6
           flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6
           border border-gray-200 dark:border-gray-700
