@@ -20,7 +20,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "date-fns": "^3.0.6",
-    "framer-motion": "^12.9.3",
+    "framer-motion": "^12.9.4",
     "lucide-react": "^0.303.0",
     "markdown-draft-js": "^2.4.0",
     "nanoid": "^5.0.4",
