@@ -13,6 +13,7 @@
     "@hookform/resolvers": "^3.3.3",
     "@prisma/client": "^5.7.1",
     "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-select": "^2.2.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@vercel/blob": "^1.0.0",
     "axios": "^1.9.0",
