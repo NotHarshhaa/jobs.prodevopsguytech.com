@@ -53,11 +53,17 @@ export default function JobFilterSidebar({ defaultValues }: JobFilterSidebarProp
       <div className="md:hidden mb-4">
         <button
           type="button"
-          className="flex items-center justify-between w-full text-sm font-medium border rounded-md px-4 py-2 hover:bg-muted"
           onClick={() => setIsOpen(!isOpen)}
+          className="flex items-center justify-between w-full gap-2 px-5 py-3 rounded-xl border border-border bg-white/50 dark:bg-black/30 shadow-md backdrop-blur-md hover:bg-muted/50 active:scale-[0.98] transition-all duration-300"
         >
-          <span>Filter Jobs</span>
-          {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+          <span className="text-base font-semibold text-foreground tracking-tight">
+            Filter Jobs
+          </span>
+          <ChevronDown
+            className={`w-5 h-5 p-1 rounded-full bg-muted text-muted-foreground shadow transition-transform duration-300 ${
+              isOpen ? "rotate-180" : ""
+            }`}
+          />
         </button>
       </div>
 
