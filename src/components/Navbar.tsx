@@ -11,7 +11,7 @@ export default function Navbar() {
         className="
           w-full max-w-[350px] sm:max-w-5xl mx-auto
           bg-white/30 dark:bg-black/30 backdrop-blur-lg
-          rounded-2xl shadow-md
+          rounded-3xl shadow-md
           px-6 py-3
           flex flex-col items-center gap-4
           sm:flex-row sm:justify-between
