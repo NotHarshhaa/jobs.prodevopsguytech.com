@@ -8,10 +8,10 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "Flow Jobs",
+    default: "DevOps/Cloud Jobs",
     template: "%s | Flow Jobs",
   },
-  description: "Find your dream developer job.",
+  description: "Find your dream DevOps/Cloud job.",
 };
 
 export default function RootLayout({
