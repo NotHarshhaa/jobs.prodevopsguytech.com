@@ -9,7 +9,7 @@ export default function Navbar() {
     <header className="py-4 bg-transparent">
       <nav
         className="
-          w-full max-w-[350px] sm:max-w-5xl mx-auto
+          w-full max-w-[95%] sm:max-w-5xl mx-auto
           bg-white/30 dark:bg-black/30 backdrop-blur-lg
           rounded-3xl shadow-md
           px-6 py-3
