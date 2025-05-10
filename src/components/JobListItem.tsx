@@ -29,27 +29,32 @@ export default function JobListItem({ job }: JobListItemProps) {
     : job.applicationUrl;
 
   return (
-    <article className="rounded-xl border bg-background p-4 shadow-sm hover:shadow-md hover:bg-muted/50 transition-all space-y-4 sm:space-y-0 sm:flex sm:gap-4">
+    <article className="relative flex flex-col sm:flex-row gap-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-transparent backdrop-blur-md shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-5 overflow-hidden group">
+
       {/* Company Logo */}
-      <div className="flex-shrink-0">
-        <Image
-          src={companyLogoPlaceholder}
-          alt="Company logo"
-          width={64}
-          height={64}
-          className="rounded-md object-cover sm:w-20 sm:h-20"
-        />
+      <div className="flex-shrink-0 flex items-center justify-center z-10">
+        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-black flex items-center justify-center overflow-hidden shadow-sm">
+          <Image
+            src={companyLogoPlaceholder}
+            alt="Company logo"
+            width={64}
+            height={64}
+            className="object-cover w-full h-full"
+          />
+        </div>
       </div>
 
       {/* Job Content */}
-      <div className="flex flex-col justify-between flex-grow">
+      <div className="flex flex-col justify-between flex-grow z-10">
         {/* Title & Apply Button */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
           <div>
-            <h2 className="text-lg font-semibold leading-snug">{job.title}</h2>
-            <div className="flex items-center gap-2 flex-wrap text-sm text-muted-foreground">
-              <span>{job.companyName}</span>
-              <Badge className="capitalize">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white leading-snug mb-1">
+              {job.title}
+            </h2>
+            <div className="flex items-center gap-2 flex-wrap text-sm text-gray-500 dark:text-gray-300">
+              <span className="font-medium">{job.companyName}</span>
+              <Badge className="capitalize bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200">
                 {job.locationType}
               </Badge>
               <Badge
@@ -72,7 +77,7 @@ export default function JobListItem({ job }: JobListItemProps) {
           {applyLink && (
             <Button
               asChild
-              className="w-full sm:w-auto sm:ml-4 mt-2 sm:mt-0"
+              className="w-full sm:w-auto sm:ml-4 mt-2 sm:mt-0 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-200 font-semibold shadow-sm px-6 py-2 transition-all"
             >
               <a href={applyLink} target="_blank" rel="noopener noreferrer">
                 Apply Now
@@ -82,21 +87,21 @@ export default function JobListItem({ job }: JobListItemProps) {
         </div>
 
         {/* Meta Info */}
-        <div className="mt-4 flex flex-wrap gap-3 text-sm text-muted-foreground">
+        <div className="mt-4 flex flex-wrap gap-4 text-sm text-gray-500 dark:text-gray-300 font-medium">
           <div className="flex items-center gap-1.5">
-            <Briefcase size={14} className="shrink-0" />
+            <Briefcase size={15} className="shrink-0 text-gray-400 dark:text-gray-500" />
             {job.type}
           </div>
           <div className="flex items-center gap-1.5">
-            <MapPin size={14} className="shrink-0" />
+            <MapPin size={15} className="shrink-0 text-gray-400 dark:text-gray-500" />
             {job.location || "Worldwide"}
           </div>
           <div className="flex items-center gap-1.5">
-            <Banknote size={14} className="shrink-0" />
+            <Banknote size={15} className="shrink-0 text-gray-400 dark:text-gray-500" />
             {formatMoney(job.salary)}
           </div>
           <div className="flex items-center gap-1.5">
-            <Clock size={14} className="shrink-0" />
+            <Clock size={15} className="shrink-0 text-gray-400 dark:text-gray-500" />
             {relativeDate(job.createdAt)}
           </div>
         </div>

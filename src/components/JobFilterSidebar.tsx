@@ -52,17 +52,17 @@ export default function JobFilterSidebar({ defaultValues }: JobFilterSidebarProp
   };
 
   return (
-    <aside className="w-full md:sticky md:top-4 md:w-[260px] rounded-xl border border-muted bg-background p-4 shadow-sm transition-all duration-300">
+    <aside className="w-full md:sticky md:top-4 md:w-[260px] rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent backdrop-blur-md p-5 shadow-none transition-all duration-300">
       {/* Mobile toggle */}
       <div className="md:hidden mb-4">
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center justify-between w-full gap-2 px-5 py-3 rounded-xl border border-border bg-white/50 dark:bg-black/30 shadow-md backdrop-blur-md hover:bg-muted/50 active:scale-[0.98] transition-all duration-300"
+          className="flex items-center justify-between w-full gap-2 px-5 py-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/80 shadow-sm backdrop-blur-md hover:bg-gray-100 dark:hover:bg-gray-900 active:scale-[0.98] transition-all duration-300"
         >
-          <span className="text-base font-semibold text-foreground tracking-tight">Filter Jobs</span>
+          <span className="text-base font-semibold text-gray-900 dark:text-white tracking-tight">Filter Jobs</span>
           <ChevronDown
-            className={`w-5 h-5 p-1 rounded-full bg-muted text-muted-foreground shadow transition-transform duration-300 ${
+            className={`w-5 h-5 p-1 rounded-full bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 shadow transition-transform duration-300 ${
               isOpen ? "rotate-180" : ""
             }`}
           />
@@ -74,42 +74,42 @@ export default function JobFilterSidebar({ defaultValues }: JobFilterSidebarProp
           onSubmit={handleFormSubmit}
           action={filterJobs}
           key={JSON.stringify(defaultValues)}
-          className={`space-y-5 ${submitted ? 'opacity-50' : ''} transition-opacity duration-300`}
+          className={`space-y-6 ${submitted ? 'opacity-50' : ''} transition-opacity duration-300`}
         >
           {/* Search Input */}
           <div className="space-y-2">
-            <Label htmlFor="q">Search</Label>
+            <Label htmlFor="q" className="text-gray-700 dark:text-gray-200 font-medium">Search</Label>
             <Input
               id="q"
               name="q"
               placeholder="Title, company, etc."
               defaultValue={defaultValues.q}
-              className="w-full"
+              className="w-full rounded-lg border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/80 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700 transition-all"
             />
           </div>
 
           {/* Job Type Dropdown */}
           <div className="space-y-2">
-            <Label htmlFor="type">Type</Label>
+            <Label htmlFor="type" className="text-gray-700 dark:text-gray-200 font-medium">Type</Label>
             <Select
               options={jobTypes}
               value={selectedType}
               onValueChange={setSelectedType}
               placeholder="Select type"
-              className="w-full"
+              className="w-full rounded-lg border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/80 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700 transition-all"
             />
             <input type="hidden" name="type" value={selectedType === "all" ? "" : selectedType} />
           </div>
 
           {/* Location Dropdown */}
           <div className="space-y-2">
-            <Label htmlFor="location">Location</Label>
+            <Label htmlFor="location" className="text-gray-700 dark:text-gray-200 font-medium">Location</Label>
             <Select
               options={locations}
               value={selectedLocation}
               onValueChange={setSelectedLocation}
               placeholder="Select location"
-              className="w-full"
+              className="w-full rounded-lg border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/80 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700 transition-all"
             />
             <input type="hidden" name="location" value={selectedLocation === "all" ? "" : selectedLocation} />
           </div>
@@ -120,13 +120,13 @@ export default function JobFilterSidebar({ defaultValues }: JobFilterSidebarProp
               id="remote"
               name="remote"
               type="checkbox"
-              className="scale-125 accent-black"
+              className="scale-125 accent-black rounded border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700 transition-all"
               defaultChecked={defaultValues.remote}
             />
-            <Label htmlFor="remote">Remote jobs</Label>
+            <Label htmlFor="remote" className="text-gray-700 dark:text-gray-200">Remote jobs</Label>
           </div>
 
-          <FormSubmitButton className="w-full font-medium">
+          <FormSubmitButton className="w-full font-medium rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-200 transition-all py-2 px-4 shadow-sm">
             Filter jobs
           </FormSubmitButton>
         </form>
