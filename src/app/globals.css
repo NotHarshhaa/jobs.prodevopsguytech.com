@@ -32,7 +32,7 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
  
-    --radius: 0.5rem;
+    --radius: 0.75rem;
   }
  
   .dark {
@@ -68,9 +68,42 @@
  
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border transition-colors duration-200;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground min-h-screen font-sans antialiased selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-blue-900 dark:selection:text-blue-100;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    background-attachment: fixed;
   }
+  .dark body {
+    background: linear-gradient(135deg, #181c20 0%, #23272f 100%);
+    background-attachment: fixed;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  .card-shadow {
+    box-shadow: 0 4px 32px 0 rgba(16, 30, 54, 0.08), 0 1.5px 6px 0 rgba(16, 30, 54, 0.04);
+  }
+  :focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+  }
+}
+
+.card-shadow {
+  box-shadow: 0 4px 32px 0 rgba(16, 30, 54, 0.08), 0 1.5px 6px 0 rgba(16, 30, 54, 0.04);
+}
+
+:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(16px);}
+  to { opacity: 1; transform: none; }
+}
+.animate-fadein {
+  animation: fadein 0.7s cubic-bezier(.4,0,.2,1) both;
 }

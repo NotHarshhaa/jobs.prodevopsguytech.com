@@ -52,18 +52,20 @@ export default async function Home({
   };
 
   return (
-    <main className="m-auto my-10 max-w-5xl space-y-10 px-3">
-      <div className="space-y-5 text-center">
-        <H1>{getTitle(filterValues)}</H1>
-        <p className="text-muted-foreground">Find your dream job.</p>
+    <main className="flex flex-col items-center justify-center min-h-[70vh] w-full px-2 sm:px-4 md:px-6 animate-fadein">
+      <div className="w-full max-w-5xl mx-auto space-y-8 pt-8">
+        <div className="space-y-4 text-center">
+          <H1>{getTitle(filterValues)}</H1>
+          <p className="text-lg text-muted-foreground">Find your dream job.</p>
+        </div>
+        <section className="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch justify-center w-full">
+          <JobFilterSidebar defaultValues={filterValues} />
+          <JobResults
+            filterValues={filterValues}
+            page={page ? parseInt(page) : undefined}
+          />
+        </section>
       </div>
-      <section className="flex flex-col gap-4 md:flex-row">
-        <JobFilterSidebar defaultValues={filterValues} />
-        <JobResults
-          filterValues={filterValues}
-          page={page ? parseInt(page) : undefined}
-        />
-      </section>
     </main>
   );
 }

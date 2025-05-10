@@ -23,7 +23,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} min-w-[350px]`}>
         <Navbar />
-        {children}
+        <main className="flex-1 flex flex-col items-center justify-center w-full min-h-[calc(100vh-160px)] px-2 sm:px-4 md:px-6 py-8 animate-fadein">
+          <div className="w-full max-w-6xl mx-auto">
+            {children}
+          </div>
+        </main>
         <Footer />
       </body>
     </html>
