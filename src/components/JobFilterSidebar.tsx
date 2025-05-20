@@ -73,24 +73,24 @@ export default function JobFilterSidebar({ defaultValues }: JobFilterSidebarProp
 
       {(isClient && (isOpen || window.innerWidth >= 768)) && (
         <CardContent className="grid gap-6">
-          <form
-            onSubmit={handleFormSubmit}
-            action={filterJobs}
-            key={JSON.stringify(defaultValues)}
-            className={`space-y-6 ${submitted ? 'opacity-50' : ''} transition-opacity duration-300`}
-          >
-            <div className="space-y-2">
+        <form
+          onSubmit={handleFormSubmit}
+          action={filterJobs}
+          key={JSON.stringify(defaultValues)}
+          className={`space-y-6 ${submitted ? 'opacity-50' : ''} transition-opacity duration-300`}
+        >
+          <div className="space-y-2">
               <Label htmlFor="q" className="dark:text-gray-200">Search</Label>
-              <Input
-                id="q"
-                name="q"
-                placeholder="Title, company, etc."
-                defaultValue={defaultValues.q}
+            <Input
+              id="q"
+              name="q"
+              placeholder="Title, company, etc."
+              defaultValue={defaultValues.q}
                 className="w-full dark:bg-gray-900 dark:border-gray-800 dark:placeholder:text-gray-500"
-              />
-            </div>
+            />
+          </div>
 
-            <div className="space-y-2">
+          <div className="space-y-2">
               <Label htmlFor="type" className="dark:text-gray-200">Type</Label>
               <Select value={selectedType} onValueChange={setSelectedType}>
                 <SelectTrigger className="dark:bg-gray-900 dark:border-gray-800">
@@ -104,10 +104,10 @@ export default function JobFilterSidebar({ defaultValues }: JobFilterSidebarProp
                   ))}
                 </SelectContent>
               </Select>
-              <input type="hidden" name="type" value={selectedType === "all" ? "" : selectedType} />
-            </div>
+            <input type="hidden" name="type" value={selectedType === "all" ? "" : selectedType} />
+          </div>
 
-            <div className="space-y-2">
+          <div className="space-y-2">
               <Label htmlFor="location" className="dark:text-gray-200">Location</Label>
               <Select value={selectedLocation} onValueChange={setSelectedLocation}>
                 <SelectTrigger className="dark:bg-gray-900 dark:border-gray-800">
@@ -121,25 +121,25 @@ export default function JobFilterSidebar({ defaultValues }: JobFilterSidebarProp
                   ))}
                 </SelectContent>
               </Select>
-              <input type="hidden" name="location" value={selectedLocation === "all" ? "" : selectedLocation} />
-            </div>
+            <input type="hidden" name="location" value={selectedLocation === "all" ? "" : selectedLocation} />
+          </div>
 
             <div className="flex items-center space-x-2">
               <Checkbox
-                id="remote"
-                name="remote"
-                defaultChecked={defaultValues.remote}
+              id="remote"
+              name="remote"
+              defaultChecked={defaultValues.remote}
                 className="dark:border-gray-700"
-              />
+            />
               <Label htmlFor="remote" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-gray-300">
                 Remote jobs only
               </Label>
-            </div>
+          </div>
 
             <Button type="submit" className="w-full dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
-              Filter jobs
+            Filter jobs
             </Button>
-          </form>
+        </form>
         </CardContent>
       )}
     </Card>

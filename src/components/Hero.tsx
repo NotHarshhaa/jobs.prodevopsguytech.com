@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Button } from "./ui/button"
 import { ArrowRight } from "lucide-react"
+import Loader from "./Loader"
 
 export default function Hero() {
   return (
@@ -25,6 +26,10 @@ export default function Hero() {
           <h2 className="mt-6 text-2xl font-medium tracking-tight text-muted-foreground sm:text-3xl">
             Don&apos;t start from scratch
           </h2>
+
+          <div className="my-12 flex justify-center">
+            <Loader />
+          </div>
 
           <p className="mt-6 text-lg leading-8 text-muted-foreground">
             Kickstart with{" "}

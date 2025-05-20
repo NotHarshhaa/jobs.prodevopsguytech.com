@@ -47,21 +47,21 @@ export default function JobResults({
   return (
     <div className="space-y-6">
       <div className="grid gap-6">
-        {paginatedJobs.map((job) => (
+      {paginatedJobs.map((job) => (
           <Card key={job.slug} className="overflow-hidden border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:bg-black/95 dark:border-gray-800">
-            <JobListItem
-              job={{
-                ...job,
-                id:
-                  typeof job.id === "string"
-                    ? parseInt(job.id, 10)
-                    : job.id || Math.random(),
-                createdAt: new Date(job.createdAt),
-                updatedAt: new Date(job.updatedAt || new Date().toISOString()),
-              }}
-            />
+        <JobListItem
+          job={{
+            ...job,
+            id:
+              typeof job.id === "string"
+                ? parseInt(job.id, 10)
+                : job.id || Math.random(),
+            createdAt: new Date(job.createdAt),
+            updatedAt: new Date(job.updatedAt || new Date().toISOString()),
+          }}
+        />
           </Card>
-        ))}
+      ))}
       </div>
 
       {paginatedJobs.length === 0 && (
@@ -116,7 +116,7 @@ function Pagination({
         <a href={generatePageLink(currentPage - 1)}>
           <ArrowLeft className="h-4 w-4" />
           Previous
-        </a>
+      </a>
       </Button>
       
       <span className="text-sm text-muted-foreground dark:text-gray-400">
@@ -134,7 +134,7 @@ function Pagination({
         <a href={generatePageLink(currentPage + 1)}>
           Next
           <ArrowRight className="h-4 w-4" />
-        </a>
+      </a>
       </Button>
     </div>
   );
