@@ -3,8 +3,9 @@ import { formatMoney, relativeDate } from "@/lib/utils";
 import { Banknote, Briefcase, Clock, Globe2, MapPin } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import Badge from "./Badge";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { CardContent } from "@/components/ui/card";
 
 export interface JobListItemProps {
   job: {
@@ -29,83 +30,79 @@ export default function JobListItem({ job }: JobListItemProps) {
     : job.applicationUrl;
 
   return (
-    <article className="relative flex flex-col sm:flex-row gap-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-transparent backdrop-blur-md shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-5 overflow-hidden group">
-
-      {/* Company Logo */}
-      <div className="flex-shrink-0 flex items-center justify-center z-10">
-        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-black flex items-center justify-center overflow-hidden shadow-sm">
-          <Image
-            src={companyLogoPlaceholder}
-            alt="Company logo"
-            width={64}
-            height={64}
-            className="object-cover w-full h-full"
-          />
+    <CardContent className="p-6">
+      <div className="flex flex-col sm:flex-row gap-6">
+        {/* Company Logo */}
+        <div className="flex-shrink-0">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg bg-muted/10 border border-border/40 dark:bg-gray-900 dark:border-gray-800 flex items-center justify-center overflow-hidden">
+            <Image
+              src={companyLogoPlaceholder}
+              alt="Company logo"
+              width={64}
+              height={64}
+              className="object-cover"
+            />
+          </div>
         </div>
-      </div>
 
-      {/* Job Content */}
-      <div className="flex flex-col justify-between flex-grow z-10">
-        {/* Title & Apply Button */}
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
-          <div>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white leading-snug mb-1">
-              {job.title}
-            </h2>
-            <div className="flex items-center gap-2 flex-wrap text-sm text-gray-500 dark:text-gray-300">
-              <span className="font-medium">{job.companyName}</span>
-              <Badge className="capitalize bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200">
-                {job.locationType}
-              </Badge>
-              <Badge
-                className={cn(
-                  "capitalize",
-                  job.type === "Full-time"
-                    ? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100"
-                    : job.type === "Part-time"
-                    ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100"
-                    : job.type === "Contract"
-                    ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100"
-                    : "bg-muted text-muted-foreground"
-                )}
-              >
-                {job.type}
-              </Badge>
+        {/* Job Content */}
+        <div className="flex-grow space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+            <div className="space-y-1.5">
+              <h2 className="text-xl font-semibold tracking-tight dark:text-white">
+                {job.title}
+              </h2>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-sm text-muted-foreground dark:text-gray-400 font-medium">
+                  {job.companyName}
+                </span>
+                <Badge variant="secondary" className="capitalize dark:bg-gray-800 dark:text-gray-200">
+                  {job.locationType}
+                </Badge>
+                <Badge
+                  variant="outline"
+                  className={cn(
+                    "capitalize",
+                    job.type === "Full-time" && "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300",
+                    job.type === "Part-time" && "border-yellow-200 bg-yellow-50 text-yellow-700 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-300",
+                    job.type === "Contract" && "border-red-200 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-300"
+                  )}
+                >
+                  {job.type}
+                </Badge>
+              </div>
+            </div>
+
+            {applyLink && (
+              <Button asChild size="sm" className="dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
+                <a href={applyLink} target="_blank" rel="noopener noreferrer">
+                  Apply Now
+                </a>
+              </Button>
+            )}
+          </div>
+
+          {/* Meta Info */}
+          <div className="flex flex-wrap gap-4 text-sm text-muted-foreground dark:text-gray-400">
+            <div className="flex items-center gap-1.5">
+              <Briefcase className="h-4 w-4" />
+              {job.type}
+            </div>
+            <div className="flex items-center gap-1.5">
+              <MapPin className="h-4 w-4" />
+              {job.location || "Worldwide"}
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Banknote className="h-4 w-4" />
+              {formatMoney(job.salary)}
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Clock className="h-4 w-4" />
+              {relativeDate(job.createdAt)}
             </div>
           </div>
-
-          {applyLink && (
-            <Button
-              asChild
-              className="w-full sm:w-auto sm:ml-4 mt-2 sm:mt-0 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-200 font-semibold shadow-sm px-6 py-2 transition-all"
-            >
-              <a href={applyLink} target="_blank" rel="noopener noreferrer">
-                Apply Now
-              </a>
-            </Button>
-          )}
-        </div>
-
-        {/* Meta Info */}
-        <div className="mt-4 flex flex-wrap gap-4 text-sm text-gray-500 dark:text-gray-300 font-medium">
-          <div className="flex items-center gap-1.5">
-            <Briefcase size={15} className="shrink-0 text-gray-400 dark:text-gray-500" />
-            {job.type}
-          </div>
-          <div className="flex items-center gap-1.5">
-            <MapPin size={15} className="shrink-0 text-gray-400 dark:text-gray-500" />
-            {job.location || "Worldwide"}
-          </div>
-          <div className="flex items-center gap-1.5">
-            <Banknote size={15} className="shrink-0 text-gray-400 dark:text-gray-500" />
-            {formatMoney(job.salary)}
-          </div>
-          <div className="flex items-center gap-1.5">
-            <Clock size={15} className="shrink-0 text-gray-400 dark:text-gray-500" />
-            {relativeDate(job.createdAt)}
-          </div>
         </div>
       </div>
-    </article>
+    </CardContent>
   );
 }

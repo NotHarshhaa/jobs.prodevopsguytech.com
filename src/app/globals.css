@@ -72,11 +72,15 @@
   }
   body {
     @apply bg-background text-foreground min-h-screen font-sans antialiased selection:bg-blue-100 selection:text-blue-900 dark:selection:bg-blue-900 dark:selection:text-blue-100;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    background: radial-gradient(circle at top left, rgba(255, 128, 181, 0.05), transparent 25%),
+                radial-gradient(circle at top right, rgba(144, 137, 252, 0.05), transparent 25%),
+                linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
     background-attachment: fixed;
   }
   .dark body {
-    background: linear-gradient(135deg, #181c20 0%, #23272f 100%);
+    background: radial-gradient(circle at top left, rgba(255, 128, 181, 0.05), transparent 25%),
+                radial-gradient(circle at top right, rgba(144, 137, 252, 0.05), transparent 25%),
+                linear-gradient(135deg, #000000 0%, #111111 100%);
     background-attachment: fixed;
   }
   html {
@@ -104,6 +108,67 @@
   from { opacity: 0; transform: translateY(16px);}
   to { opacity: 1; transform: none; }
 }
+
+@keyframes scaleUp {
+  from { transform: scale(0.95); }
+  to { transform: scale(1); }
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+    transform: scale(1.05);
+  }
+}
+
 .animate-fadein {
   animation: fadein 0.7s cubic-bezier(.4,0,.2,1) both;
+}
+
+/* Button Animations */
+.button-shine {
+  background: linear-gradient(
+    110deg,
+    hsl(var(--primary)) 45%,
+    hsl(var(--primary)) 50%,
+    hsl(var(--primary-foreground)) 55%,
+    hsl(var(--primary)) 60%
+  );
+  background-size: 200% auto;
+  transition: all 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+.button-shine:hover {
+  background-position: right center;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.button-shine:active {
+  transform: translateY(1px);
+}
+
+/* Ghost Button Animation */
+.button-ghost {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.button-ghost::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: hsl(var(--primary) / 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.button-ghost:hover::before {
+  width: 200%;
+  height: 200%;
 }

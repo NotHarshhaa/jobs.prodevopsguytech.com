@@ -1,17 +1,15 @@
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: {
-    default: "DevOps/Cloud Jobs",
-    template: "%s | Flow Jobs",
-  },
-  description: "Find your dream DevOps/Cloud job.",
+  title: "DevOps & Cloud Jobs Portal",
+  description: "Find the best DevOps and cloud computing jobs.",
 };
 
 export default function RootLayout({
@@ -20,15 +18,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} min-w-[350px]`}>
-        <Navbar />
-        <main className="flex-1 flex flex-col items-center justify-center w-full min-h-[calc(100vh-160px)] px-2 sm:px-4 md:px-6 py-8 animate-fadein">
-          <div className="w-full max-w-6xl mx-auto">
-            {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="flex min-h-screen flex-col">
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
           </div>
-        </main>
-        <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

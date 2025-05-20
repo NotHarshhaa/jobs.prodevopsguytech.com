@@ -4,10 +4,18 @@ import { useEffect, useState } from "react";
 import { jobTypes as originalJobTypes } from "@/lib/job-types";
 import { JobFilterValues } from "@/lib/validation";
 import { filterJobs } from "@/actions/filterJobs";
-import FormSubmitButton from "./FormSubmitButton";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import { Select } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChevronDown } from "lucide-react";
 
 const distinctLocations = [
@@ -31,7 +39,6 @@ export default function JobFilterSidebar({ defaultValues }: JobFilterSidebarProp
   const [isClient, setIsClient] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  // Add "All" options with non-empty value
   const jobTypes = [{ label: "All types", value: "all" }, ...originalJobTypes.map(t => ({ label: t, value: t }))];
   const locations = [{ label: "All locations", value: "all" }, ...distinctLocations.map(l => ({ label: l, value: l }))];
 
@@ -52,85 +59,89 @@ export default function JobFilterSidebar({ defaultValues }: JobFilterSidebarProp
   };
 
   return (
-    <aside className="w-full md:sticky md:top-4 md:w-[260px] rounded-xl border border-gray-200 dark:border-gray-800 bg-transparent backdrop-blur-md p-5 shadow-none transition-all duration-300">
-      {/* Mobile toggle */}
-      <div className="md:hidden mb-4">
-        <button
-          type="button"
+    <Card className="border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:bg-black/95 dark:border-gray-800">
+      <CardHeader className="md:hidden">
+        <Button
+          variant="ghost"
+          className="w-full justify-between dark:hover:bg-gray-800/50"
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center justify-between w-full gap-2 px-5 py-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/80 shadow-sm backdrop-blur-md hover:bg-gray-100 dark:hover:bg-gray-900 active:scale-[0.98] transition-all duration-300"
         >
-          <span className="text-base font-semibold text-gray-900 dark:text-white tracking-tight">Filter Jobs</span>
-          <ChevronDown
-            className={`w-5 h-5 p-1 rounded-full bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 shadow transition-transform duration-300 ${
-              isOpen ? "rotate-180" : ""
-            }`}
-          />
-        </button>
-      </div>
+          <CardTitle className="text-lg font-semibold">Filter Jobs</CardTitle>
+          <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
+        </Button>
+      </CardHeader>
 
       {(isClient && (isOpen || window.innerWidth >= 768)) && (
-        <form
-          onSubmit={handleFormSubmit}
-          action={filterJobs}
-          key={JSON.stringify(defaultValues)}
-          className={`space-y-6 ${submitted ? 'opacity-50' : ''} transition-opacity duration-300`}
-        >
-          {/* Search Input */}
-          <div className="space-y-2">
-            <Label htmlFor="q" className="text-gray-700 dark:text-gray-200 font-medium">Search</Label>
-            <Input
-              id="q"
-              name="q"
-              placeholder="Title, company, etc."
-              defaultValue={defaultValues.q}
-              className="w-full rounded-lg border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/80 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700 transition-all"
-            />
-          </div>
+        <CardContent className="grid gap-6">
+          <form
+            onSubmit={handleFormSubmit}
+            action={filterJobs}
+            key={JSON.stringify(defaultValues)}
+            className={`space-y-6 ${submitted ? 'opacity-50' : ''} transition-opacity duration-300`}
+          >
+            <div className="space-y-2">
+              <Label htmlFor="q" className="dark:text-gray-200">Search</Label>
+              <Input
+                id="q"
+                name="q"
+                placeholder="Title, company, etc."
+                defaultValue={defaultValues.q}
+                className="w-full dark:bg-gray-900 dark:border-gray-800 dark:placeholder:text-gray-500"
+              />
+            </div>
 
-          {/* Job Type Dropdown */}
-          <div className="space-y-2">
-            <Label htmlFor="type" className="text-gray-700 dark:text-gray-200 font-medium">Type</Label>
-            <Select
-              options={jobTypes}
-              value={selectedType}
-              onValueChange={setSelectedType}
-              placeholder="Select type"
-              className="w-full rounded-lg border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/80 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700 transition-all"
-            />
-            <input type="hidden" name="type" value={selectedType === "all" ? "" : selectedType} />
-          </div>
+            <div className="space-y-2">
+              <Label htmlFor="type" className="dark:text-gray-200">Type</Label>
+              <Select value={selectedType} onValueChange={setSelectedType}>
+                <SelectTrigger className="dark:bg-gray-900 dark:border-gray-800">
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent className="dark:bg-gray-900 dark:border-gray-800">
+                  {jobTypes.map((type) => (
+                    <SelectItem key={type.value} value={type.value}>
+                      {type.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <input type="hidden" name="type" value={selectedType === "all" ? "" : selectedType} />
+            </div>
 
-          {/* Location Dropdown */}
-          <div className="space-y-2">
-            <Label htmlFor="location" className="text-gray-700 dark:text-gray-200 font-medium">Location</Label>
-            <Select
-              options={locations}
-              value={selectedLocation}
-              onValueChange={setSelectedLocation}
-              placeholder="Select location"
-              className="w-full rounded-lg border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/80 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700 transition-all"
-            />
-            <input type="hidden" name="location" value={selectedLocation === "all" ? "" : selectedLocation} />
-          </div>
+            <div className="space-y-2">
+              <Label htmlFor="location" className="dark:text-gray-200">Location</Label>
+              <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+                <SelectTrigger className="dark:bg-gray-900 dark:border-gray-800">
+                  <SelectValue placeholder="Select location" />
+                </SelectTrigger>
+                <SelectContent className="dark:bg-gray-900 dark:border-gray-800">
+                  {locations.map((location) => (
+                    <SelectItem key={location.value} value={location.value}>
+                      {location.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <input type="hidden" name="location" value={selectedLocation === "all" ? "" : selectedLocation} />
+            </div>
 
-          {/* Remote Checkbox */}
-          <div className="flex items-center gap-2">
-            <input
-              id="remote"
-              name="remote"
-              type="checkbox"
-              className="scale-125 accent-black rounded border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700 transition-all"
-              defaultChecked={defaultValues.remote}
-            />
-            <Label htmlFor="remote" className="text-gray-700 dark:text-gray-200">Remote jobs</Label>
-          </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="remote"
+                name="remote"
+                defaultChecked={defaultValues.remote}
+                className="dark:border-gray-700"
+              />
+              <Label htmlFor="remote" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-gray-300">
+                Remote jobs only
+              </Label>
+            </div>
 
-          <FormSubmitButton className="w-full font-medium rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-200 transition-all py-2 px-4 shadow-sm">
-            Filter jobs
-          </FormSubmitButton>
-        </form>
+            <Button type="submit" className="w-full dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200">
+              Filter jobs
+            </Button>
+          </form>
+        </CardContent>
       )}
-    </aside>
+    </Card>
   );
 }

@@ -4,6 +4,8 @@ import { JobFilterValues } from "@/lib/validation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import JobListItem from "./JobListItem";
 import jobs from "@/data/jobs.json";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 interface JobResultsProps {
   filterValues: JobFilterValues;
@@ -43,26 +45,29 @@ export default function JobResults({
     .slice(skip, skip + jobsPerPage);
 
   return (
-    <div className="grow space-y-4">
-      {paginatedJobs.map((job) => (
-        <JobListItem
-          key={job.slug}
-          job={{
-            ...job,
-            id:
-              typeof job.id === "string"
-                ? parseInt(job.id, 10)
-                : job.id || Math.random(),
-            createdAt: new Date(job.createdAt),
-            updatedAt: new Date(job.updatedAt || new Date().toISOString()),
-          }}
-        />
-      ))}
+    <div className="space-y-6">
+      <div className="grid gap-6">
+        {paginatedJobs.map((job) => (
+          <Card key={job.slug} className="overflow-hidden border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:bg-black/95 dark:border-gray-800">
+            <JobListItem
+              job={{
+                ...job,
+                id:
+                  typeof job.id === "string"
+                    ? parseInt(job.id, 10)
+                    : job.id || Math.random(),
+                createdAt: new Date(job.createdAt),
+                updatedAt: new Date(job.updatedAt || new Date().toISOString()),
+              }}
+            />
+          </Card>
+        ))}
+      </div>
 
       {paginatedJobs.length === 0 && (
-        <p className="m-auto text-center">
+        <Card className="p-6 text-center text-muted-foreground dark:bg-black/95 dark:border-gray-800 dark:text-gray-400">
           No jobs found. Try adjusting your search filters.
-        </p>
+        </Card>
       )}
 
       {paginatedJobs.length > 0 && (
@@ -99,30 +104,38 @@ function Pagination({
   }
 
   return (
-    <div className="flex justify-between">
-      <a
-        href={generatePageLink(currentPage - 1)}
+    <div className="flex items-center justify-between">
+      <Button
+        variant="ghost"
+        asChild
         className={cn(
-          "flex items-center gap-2 font-semibold",
+          "gap-2 dark:hover:bg-gray-800/50 dark:text-gray-300",
           currentPage <= 1 && "invisible"
         )}
       >
-        <ArrowLeft size={16} />
-        Previous page
-      </a>
-      <span className="font-semibold">
+        <a href={generatePageLink(currentPage - 1)}>
+          <ArrowLeft className="h-4 w-4" />
+          Previous
+        </a>
+      </Button>
+      
+      <span className="text-sm text-muted-foreground dark:text-gray-400">
         Page {currentPage} of {totalPages}
       </span>
-      <a
-        href={generatePageLink(currentPage + 1)}
+      
+      <Button
+        variant="ghost"
+        asChild
         className={cn(
-          "flex items-center gap-2 font-semibold",
+          "gap-2 dark:hover:bg-gray-800/50 dark:text-gray-300",
           currentPage >= totalPages && "invisible"
         )}
       >
-        Next page
-        <ArrowRight size={16} />
-      </a>
+        <a href={generatePageLink(currentPage + 1)}>
+          Next
+          <ArrowRight className="h-4 w-4" />
+        </a>
+      </Button>
     </div>
   );
 }
