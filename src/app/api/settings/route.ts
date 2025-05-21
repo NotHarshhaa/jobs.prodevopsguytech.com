@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
-import bcrypt from "bcrypt";
 import { z } from "zod";
 
 const settingsSchema = z.object({
@@ -23,40 +21,20 @@ export async function PUT(request: Request) {
     const body = await request.json();
     const validatedData = settingsSchema.parse(body);
 
-    // Get the user from the database
-    const user = await prisma.user.findUnique({
-      where: { id: session.user.id },
-      select: {
-        id: true,
-        password: true,
-      },
-    });
-
-    if (!user) {
-      return new NextResponse("User not found", { status: 404 });
+    // Verify current password against environment variable
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    
+    if (!adminPassword) {
+      return new NextResponse("Server configuration error", { status: 500 });
     }
 
-    // Verify current password
-    const isPasswordValid = await bcrypt.compare(
-      validatedData.currentPassword,
-      user.password ?? ''
-    );
-
-    if (!isPasswordValid) {
+    if (validatedData.currentPassword !== adminPassword) {
       return new NextResponse("Invalid current password", { status: 400 });
     }
 
-    // Hash new password
-    const hashedPassword = await bcrypt.hash(validatedData.newPassword, 10);
-
-    // Update user
-    await prisma.user.update({
-      where: { id: user.id },
-      data: {
-        name: validatedData.username,
-        password: hashedPassword,
-      },
-    });
+    // Update the environment variable with the new password
+    // Note: This will only persist until the server restarts
+    process.env.ADMIN_PASSWORD = validatedData.newPassword;
 
     return new NextResponse("Settings updated successfully", { status: 200 });
   } catch (error) {
