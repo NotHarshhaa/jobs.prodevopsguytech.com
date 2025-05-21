@@ -65,4 +65,7 @@ export const createJobSchema = z.object({
   applicationUrl: z.string().url().optional().or(z.literal("")),
 });
 
+export const updateJobSchema = createJobSchema.partial();
+
 export type CreateJobValues = z.infer<typeof createJobSchema>;
+export type UpdateJobValues = z.infer<typeof updateJobSchema>;

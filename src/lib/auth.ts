@@ -6,31 +6,30 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        username: { label: "Username", type: "text" },
+        email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        if (!credentials?.username || !credentials?.password) {
+        if (!credentials?.email || !credentials?.password) {
           return null;
         }
 
-        const adminUsername = process.env.ADMIN_USERNAME;
+        const adminEmail = process.env.ADMIN_EMAIL;
         const adminPassword = process.env.ADMIN_PASSWORD;
 
-        if (!adminUsername || !adminPassword) {
-          throw new Error("Admin credentials not configured");
+        if (!adminEmail || !adminPassword) {
+          console.error("Admin credentials not configured in environment variables");
+          return null;
         }
 
-        if (credentials.username !== adminUsername || 
-            credentials.password !== adminPassword) {
+        if (credentials.email !== adminEmail || credentials.password !== adminPassword) {
           return null;
         }
 
         return {
-          id: "admin-user",
+          id: "admin",
+          email: adminEmail,
           name: "Admin",
-          email: "admin@example.com",
-          username: adminUsername,
           isAdmin: true
         };
       }
@@ -44,16 +43,12 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.sub as string;
-        session.user.username = token.username as string;
-        session.user.isAdmin = token.isAdmin as boolean;
+        session.user.isAdmin = true;
       }
       return session;
     },
-    async jwt({ token, user }) {
-      if (user) {
-        token.username = user.username;
-        token.isAdmin = user.isAdmin;
-      }
+    async jwt({ token }) {
+      token.isAdmin = true;
       return token;
     }
   },

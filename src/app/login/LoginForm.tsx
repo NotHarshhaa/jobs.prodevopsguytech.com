@@ -14,7 +14,7 @@ import { FcGoogle } from "react-icons/fc";
 import { motion } from "framer-motion";
 
 const loginSchema = z.object({
-  username: z.string().min(1, "Username is required"),
+  email: z.string().email("Please enter a valid email"),
   password: z.string().min(1, "Password is required"),
   rememberMe: z.boolean().optional(),
 });
@@ -29,7 +29,7 @@ export default function LoginForm() {
   const form = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
       rememberMe: false,
     },
@@ -41,7 +41,7 @@ export default function LoginForm() {
     try {
       const result = await signIn("credentials", {
         redirect: false,
-        username: data.username,
+        email: data.email,
         password: data.password,
       });
 
@@ -66,25 +66,25 @@ export default function LoginForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="space-y-4">
           <div>
-            <Label htmlFor="username" className="text-sm font-medium">Username</Label>
+            <Label htmlFor="email" className="text-sm font-medium">Email</Label>
             <div className="mt-1 relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <FiUser className="h-5 w-5 text-gray-400" />
               </div>
               <Input
-                id="username"
+                id="email"
                 className="pl-10 bg-white dark:bg-gray-950"
-                placeholder="Enter your username"
-                type="text"
+                placeholder="Enter your email"
+                type="email"
                 autoCapitalize="none"
-                autoComplete="username"
+                autoComplete="email"
                 autoCorrect="off"
-                {...register("username")}
+                {...register("email")}
               />
             </div>
-            {errors.username && (
+            {errors.email && (
               <p className="text-sm text-red-500 mt-1">
-                {errors.username.message}
+                {errors.email.message}
               </p>
             )}
           </div>

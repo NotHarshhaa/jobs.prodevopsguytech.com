@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { jobTypes, locationTypes } from "@/lib/job-types";
-import { CreateJobValues, createJobSchema } from "@/lib/validation";
+import { UpdateJobValues, updateJobSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -38,8 +38,8 @@ export default function EditJobForm({ job }: EditJobFormProps) {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   
-  const form = useForm<CreateJobValues>({
-    resolver: zodResolver(createJobSchema),
+  const form = useForm<UpdateJobValues>({
+    resolver: zodResolver(updateJobSchema),
     defaultValues: {
       title: job.title,
       type: job.type,
@@ -59,7 +59,7 @@ export default function EditJobForm({ job }: EditJobFormProps) {
     setValue,
   } = form;
 
-  async function onSubmit(values: CreateJobValues) {
+  async function onSubmit(values: UpdateJobValues) {
     try {
       setError(null);
       const formData = new FormData();

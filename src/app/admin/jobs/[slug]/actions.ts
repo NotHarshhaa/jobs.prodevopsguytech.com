@@ -1,6 +1,6 @@
 "use server";
 
-import { createJobSchema } from "@/lib/validation";
+import { updateJobSchema } from "@/lib/validation";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -14,30 +14,11 @@ export async function updateJob(slug: string, formData: FormData) {
   }
 
   const values = Object.fromEntries(formData.entries());
-
-  const {
-    title,
-    type,
-    companyName,
-    locationType,
-    location,
-    applicationEmail,
-    applicationUrl,
-    experience,
-  } = createJobSchema.parse(values);
+  const validatedData = updateJobSchema.parse(values);
 
   await prisma.job.update({
     where: { slug },
-    data: {
-      title,
-      type,
-      companyName,
-      locationType,
-      location,
-      applicationEmail,
-      applicationUrl,
-      experience,
-    },
+    data: validatedData,
   });
 
   revalidatePath("/");
