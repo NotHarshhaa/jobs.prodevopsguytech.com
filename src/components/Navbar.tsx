@@ -205,8 +205,10 @@ export default function Navbar() {
               <Button variant="ghost" onClick={() => signIn()}>
                 Sign In
               </Button>
-              <Button onClick={() => signIn()}>
-                Get Started
+              <Button asChild>
+                <Link href="/get-started">
+                  Get Started
+                </Link>
               </Button>
             </div>
           )}
