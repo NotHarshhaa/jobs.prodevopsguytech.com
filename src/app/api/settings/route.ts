@@ -39,7 +39,7 @@ export async function PUT(request: Request) {
     // Verify current password
     const isPasswordValid = await bcrypt.compare(
       validatedData.currentPassword,
-      user.password
+      user.password ?? ''
     );
 
     if (!isPasswordValid) {

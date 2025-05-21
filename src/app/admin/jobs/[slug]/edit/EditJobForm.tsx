@@ -46,7 +46,7 @@ export default function EditJobForm({ job }: EditJobFormProps) {
       companyName: job.companyName,
       locationType: job.locationType,
       location: job.location || undefined,
-      salary: job.salary,
+      experience: job.experience,
       applicationEmail: job.applicationEmail || undefined,
       applicationUrl: job.applicationUrl || undefined,
     }
