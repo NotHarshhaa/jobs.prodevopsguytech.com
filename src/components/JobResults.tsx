@@ -1,79 +1,72 @@
 // src/components/JobResults.tsx
 import { cn } from "@/lib/utils";
 import { JobFilterValues } from "@/lib/validation";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import JobListItem from "./JobListItem";
-import jobs from "@/data/jobs.json";
+import { ArrowLeft, ArrowRight, Briefcase, MapPin, Clock, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { getJobs } from "@/app/actions/getJobs";
+import { Badge } from "./ui/badge";
+import { Job } from "@prisma/client";
+import JobListItem from "./JobListItem";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 interface JobResultsProps {
   filterValues: JobFilterValues;
   page?: number;
+  showAll?: boolean;
 }
 
-export default function JobResults({
-  filterValues,
-  page = 1,
-}: JobResultsProps) {
-  const { q, type, location, remote } = filterValues;
-  const jobsPerPage = 6;
-  const skip = (page - 1) * jobsPerPage;
-
-  let filteredJobs = jobs.filter((job) => job.approved);
-
-  if (q) {
-    const keywords = q.toLowerCase().split(" ").filter(Boolean);
-    filteredJobs = filteredJobs.filter((job) =>
-      keywords.every((word) =>
-        [job.title, job.companyName, job.type, job.locationType, job.location]
-          .map((s) => s.toLowerCase())
-          .some((field) => field.includes(word))
-      )
-    );
-  }
-
-  if (type) filteredJobs = filteredJobs.filter((job) => job.type === type);
-  if (location)
-    filteredJobs = filteredJobs.filter((job) => job.location === location);
-  if (remote)
-    filteredJobs = filteredJobs.filter((job) => job.locationType === "Remote");
-
-  const totalResults = filteredJobs.length;
-  const paginatedJobs = filteredJobs
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-    .slice(skip, skip + jobsPerPage);
+export default async function JobResults({ filterValues, page = 1, showAll = false }: JobResultsProps) {
+  const session = await getServerSession(authOptions);
+  const jobs = await getJobs(filterValues, showAll);
 
   return (
-    <div className="space-y-6">
-      <div className="grid gap-6">
-      {paginatedJobs.map((job) => (
-          <Card key={job.slug} className="overflow-hidden border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:bg-black/95 dark:border-gray-800">
-        <JobListItem
-          job={{
-            ...job,
-            id:
-              typeof job.id === "string"
-                ? parseInt(job.id, 10)
-                : job.id || Math.random(),
-            createdAt: new Date(job.createdAt),
-            updatedAt: new Date(job.updatedAt || new Date().toISOString()),
-          }}
-        />
-          </Card>
-      ))}
+    <div className="space-y-8">
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-semibold tracking-tight">
+          Available Positions
+          <Badge variant="secondary" className="ml-3">
+            {jobs.length} jobs
+          </Badge>
+        </h2>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm">
+            Most Recent
+          </Button>
+          <Button variant="outline" size="sm">
+            Most Relevant
+          </Button>
+        </div>
       </div>
 
-      {paginatedJobs.length === 0 && (
-        <Card className="p-6 text-center text-muted-foreground dark:bg-black/95 dark:border-gray-800 dark:text-gray-400">
-          No jobs found. Try adjusting your search filters.
-        </Card>
-      )}
+      <div className="grid gap-6">
+        {jobs.map((job) => (
+          <JobListItem 
+            key={job.id} 
+            job={job} 
+            hideAdminControls={!showAll || !session?.user.isAdmin} 
+          />
+        ))}
 
-      {paginatedJobs.length > 0 && (
+        {jobs.length === 0 && (
+          <div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center">
+            <Briefcase className="h-12 w-12 text-muted-foreground/50" />
+            <h3 className="mt-4 text-lg font-semibold">No jobs found</h3>
+            <p className="mt-2 text-muted-foreground">
+              Try adjusting your search filters or browse all available positions.
+            </p>
+            <Button className="mt-6" variant="outline" asChild>
+              <a href="/jobs">View All Jobs</a>
+            </Button>
+          </div>
+        )}
+      </div>
+
+      {jobs.length > 0 && (
         <Pagination
           currentPage={page}
-          totalPages={Math.ceil(totalResults / jobsPerPage)}
+          totalPages={Math.ceil(jobs.length / 10)}
           filterValues={filterValues}
         />
       )}
@@ -100,41 +93,56 @@ function Pagination({
       ...(remote && { remote: "true" }),
       page: page.toString(),
     });
-    return `/?${searchParams.toString()}`;
+    return `/jobs?${searchParams.toString()}`;
   }
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between border-t border-border/40 pt-6">
       <Button
         variant="ghost"
         asChild
         className={cn(
-          "gap-2 dark:hover:bg-gray-800/50 dark:text-gray-300",
+          "gap-2 hover:bg-background/80 dark:hover:bg-gray-800/50 dark:text-gray-300",
           currentPage <= 1 && "invisible"
         )}
       >
         <a href={generatePageLink(currentPage - 1)}>
           <ArrowLeft className="h-4 w-4" />
           Previous
-      </a>
+        </a>
       </Button>
       
-      <span className="text-sm text-muted-foreground dark:text-gray-400">
-        Page {currentPage} of {totalPages}
-      </span>
+      <div className="flex items-center gap-2">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+          <Button
+            key={pageNum}
+            variant={pageNum === currentPage ? "default" : "ghost"}
+            size="sm"
+            asChild
+            className={cn(
+              "min-w-[2.5rem] rounded-full",
+              pageNum === currentPage && "pointer-events-none"
+            )}
+          >
+            <a href={generatePageLink(pageNum)}>
+              {pageNum}
+            </a>
+          </Button>
+        ))}
+      </div>
       
       <Button
         variant="ghost"
         asChild
         className={cn(
-          "gap-2 dark:hover:bg-gray-800/50 dark:text-gray-300",
+          "gap-2 hover:bg-background/80 dark:hover:bg-gray-800/50 dark:text-gray-300",
           currentPage >= totalPages && "invisible"
         )}
       >
         <a href={generatePageLink(currentPage + 1)}>
           Next
           <ArrowRight className="h-4 w-4" />
-      </a>
+        </a>
       </Button>
     </div>
   );

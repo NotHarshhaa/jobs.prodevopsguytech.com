@@ -41,26 +41,6 @@ const locationSchema = z
     },
   );
 
-export const createJobSchema = z
-  .object({
-    title: requiredString.max(100),
-    type: requiredString.refine(
-      (value) => jobTypes.includes(value),
-      "Invalid job type",
-    ),
-    companyName: requiredString.max(100),
-    companyLogo: companyLogoSchema,
-    description: z.string().max(5000).optional(),
-    salary: numericRequiredString.max(
-      9,
-      "Number can't be longer than 9 digits",
-    ),
-  })
-  .and(applicationSchema)
-  .and(locationSchema);
-
-export type CreateJobValues = z.infer<typeof createJobSchema>;
-
 export const jobFilterSchema = z.object({
   q: z.string().optional(),
   type: z.string().optional(),
@@ -69,3 +49,20 @@ export const jobFilterSchema = z.object({
 });
 
 export type JobFilterValues = z.infer<typeof jobFilterSchema>;
+
+export const createJobSchema = z.object({
+  title: z.string().min(1, "Required"),
+  type: z.string().refine((value) => jobTypes.includes(value), {
+    message: "Please select a valid job type"
+  }),
+  companyName: z.string().min(1, "Required"),
+  locationType: z.string().refine((value) => locationTypes.includes(value), {
+    message: "Please select a valid location type"
+  }),
+  location: z.string().min(1, "Required").optional(),
+  experience: z.string().min(1, "Required"),
+  applicationEmail: z.string().email().optional().or(z.literal("")),
+  applicationUrl: z.string().url().optional().or(z.literal("")),
+});
+
+export type CreateJobValues = z.infer<typeof createJobSchema>;

@@ -1,6 +1,6 @@
-import JobFilterSidebar from "@/components/JobFilterSidebar"
 import JobResults from "@/components/JobResults"
-import { JobFilterValues } from "@/lib/validation"
+import JobSearchFilter from "@/components/JobSearchFilter"
+import { jobFilterSchema } from "@/lib/validation"
 import { Metadata } from "next"
 
 interface PageProps {
@@ -13,61 +13,23 @@ interface PageProps {
   }
 }
 
-function getTitle({ q, type, location, remote }: JobFilterValues) {
-  const titlePrefix = q
-    ? `${q} jobs`
-    : type
-      ? `${type} DevOps/Cloud Jobs`
-      : remote
-        ? "Remote DevOps/Cloud Jobs"
-        : "All DevOps/Cloud Jobs"
-
-  const titleSuffix = location ? ` in ${location}` : ""
-
-  return `${titlePrefix}${titleSuffix}`
+export const metadata: Metadata = {
+  title: "Browse Jobs | DevOps & Cloud Jobs",
+  description: "Find the latest DevOps and cloud computing job opportunities.",
 }
 
-export function generateMetadata({
-  searchParams: { q, type, location, remote },
-}: PageProps): Metadata {
-  return {
-    title: `${getTitle({
-      q,
-      type,
-      location,
-      remote: remote === "true",
-    })} | ProDevOpsGuy Tech`,
-  }
-}
-
-export default function JobsPage({
-  searchParams: { q, type, location, remote, page },
-}: PageProps) {
-  const filterValues: JobFilterValues = {
-    q,
-    type,
-    location,
-    remote: remote === "true",
-  }
+export default function JobsPage({ searchParams }: PageProps) {
+  const filterValues = jobFilterSchema.parse(searchParams)
+  const page = searchParams.page ? parseInt(searchParams.page) : 1
 
   return (
-    <main className="container py-16">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold tracking-tight">
-          {getTitle(filterValues)}
-        </h1>
-        <p className="mt-3 text-lg text-muted-foreground">
-          Find your perfect role in DevOps and cloud computing
-        </p>
+    <main className="mx-auto max-w-7xl space-y-8 px-4 py-8">
+      <div className="space-y-6">
+        <h1 className="text-4xl font-bold tracking-tight">Browse Jobs</h1>
+        <JobSearchFilter />
       </div>
 
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-[280px_1fr]">
-        <JobFilterSidebar defaultValues={filterValues} />
-        <JobResults
-          filterValues={filterValues}
-          page={page ? parseInt(page) : undefined}
-        />
-      </div>
+      <JobResults filterValues={filterValues} page={page} />
     </main>
   )
 } 

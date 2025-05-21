@@ -4,9 +4,9 @@ import * as React from "react";
 import logo from "@/assets/logo.png";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import ThemeToggle from "./ThemeToggle";
-import { Github, Menu } from "lucide-react";
+import { Github, Menu, LogOut, Search, Bell, User } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -17,6 +17,16 @@ import {
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const resourcesItems = [
   {
@@ -42,9 +52,17 @@ const resourcesItems = [
 ];
 
 export default function Navbar() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await signOut({ redirect: false });
+    router.push("/");
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <nav className="container flex h-14 max-w-7xl items-center justify-between">
+      <nav className="container flex h-16 max-w-7xl items-center justify-between">
         {/* Logo and Brand */}
         <div className="flex items-center">
           <Link href="/" className="flex items-center space-x-2">
@@ -56,9 +74,9 @@ export default function Navbar() {
                 fill
               />
             </div>
-            <span className="flex items-center gap-1">
+            <span className="flex items-center gap-2">
               <span className="font-semibold hidden sm:inline">DevOps & Cloud Jobs</span>
-              <span className="rounded-md bg-zinc-100 px-1.5 py-0.5 text-xs font-medium text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100">
+              <span className="rounded-full bg-gradient-to-r from-primary/20 to-purple-600/20 px-2 py-0.5 text-xs font-medium text-primary">
                 Beta
               </span>
             </span>
@@ -66,16 +84,16 @@ export default function Navbar() {
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-8">
           <Link
             href="/jobs"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:underline underline-offset-4"
           >
             Jobs
           </Link>
           <Link
             href="/about"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:underline underline-offset-4"
           >
             About
           </Link>
@@ -114,9 +132,9 @@ export default function Navbar() {
         </div>
 
         {/* Right Side Actions */}
-        <div className="flex items-center gap-2">
-          <div className="hidden sm:flex items-center gap-2">
-            <Button variant="ghost" size="icon" asChild>
+        <div className="flex items-center gap-4">
+          <div className="hidden sm:flex items-center gap-4">
+            <Button variant="ghost" size="icon" className="rounded-full" asChild>
               <Link
                 href="https://github.com/NotHarshhaa"
                 target="_blank"
@@ -130,11 +148,74 @@ export default function Navbar() {
             <ThemeToggle />
           </div>
 
+          {status === "authenticated" && session ? (
+            <div className="flex items-center gap-4">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="rounded-full h-8 w-8 p-0">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={session.user?.image || undefined} />
+                      <AvatarFallback>
+                        {session.user?.name?.[0] || "U"}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <div className="flex items-center justify-start gap-2 p-2">
+                    <div className="flex flex-col space-y-1 leading-none">
+                      {session.user?.name && (
+                        <p className="font-medium">{session.user.name}</p>
+                      )}
+                      {session.user?.email && (
+                        <p className="w-[200px] truncate text-sm text-muted-foreground">
+                          {session.user.email}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href="/jobs/new" className="cursor-pointer">
+                      Post a Job
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/admin" className="cursor-pointer">
+                      Admin Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/settings" className="cursor-pointer">
+                      Settings
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    className="cursor-pointer text-red-600 focus:text-red-600"
+                    onClick={handleSignOut}
+                  >
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" onClick={() => signIn()}>
+                Sign In
+              </Button>
+              <Button onClick={() => signIn()}>
+                Get Started
+              </Button>
+            </div>
+          )}
+
           {/* Mobile Menu */}
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" className="rounded-full">
                   <Menu className="h-5 w-5" />
                   <span className="sr-only">Toggle menu</span>
                 </Button>
@@ -178,7 +259,6 @@ export default function Navbar() {
                 </div>
               </SheetContent>
             </Sheet>
-            <ThemeToggle />
           </div>
         </div>
       </nav>
