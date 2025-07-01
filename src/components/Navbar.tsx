@@ -116,11 +116,11 @@ export default function Navbar() {
           : "bg-background/50 backdrop-blur-sm",
       )}
     >
-      <nav className="container flex h-14 max-w-7xl items-center justify-between px-2 pr-1 sm:h-16 sm:px-3 md:px-8">
+      <nav className="container flex h-16 max-w-7xl items-center justify-between px-2 pr-1 sm:h-16 sm:px-3 md:px-8">
         {/* Logo and Brand */}
         <div className="flex items-center">
           <Link href="/" className="flex items-center space-x-1.5 sm:space-x-2">
-            <div className="relative h-7 w-7 overflow-hidden rounded-lg shadow-md transition-transform duration-300 hover:scale-105 sm:h-8 sm:w-8 md:h-9 md:w-9">
+            <div className="relative h-8 w-8 overflow-hidden rounded-lg shadow-md transition-transform duration-300 hover:scale-105 sm:h-8 sm:w-8 md:h-9 md:w-9">
               <Image
                 src={logo}
                 alt="DevOps & Cloud Jobs Portal"
@@ -131,12 +131,12 @@ export default function Navbar() {
             </div>
             <div className="flex flex-col">
               <span className="flex items-center gap-1">
-                <span className="font-heading text-[11px] font-bold tracking-tight sm:text-sm md:text-base">
+                <span className="font-heading text-[13px] font-bold tracking-tight sm:text-sm md:text-base">
                   DevOps & Cloud
                 </span>
                 <Badge
                   variant="outline"
-                  className="rounded-full border-primary/20 bg-primary/5 px-1 py-0 text-[8px] font-medium text-primary sm:px-1.5 sm:text-[10px] md:px-2 md:text-xs"
+                  className="rounded-full border-primary/20 bg-primary/5 px-1 py-0 text-[9px] font-medium text-primary sm:px-1.5 sm:text-[10px] md:px-2 md:text-xs"
                 >
                   Beta
                 </Badge>
@@ -236,10 +236,10 @@ export default function Navbar() {
           <Button
             variant="ghost"
             size="icon"
-            className="h-6 w-6 rounded-full text-muted-foreground hover:bg-primary/5 hover:text-primary sm:h-7 sm:w-7 md:h-8 md:w-8"
+            className="h-9 w-9 rounded-full text-muted-foreground hover:bg-primary/5 hover:text-primary sm:h-8 sm:w-8 md:h-9 md:w-9"
             onClick={() => setShowSearch(!showSearch)}
           >
-            <Search className="h-4 w-4 sm:h-4 sm:w-4 md:h-4 md:w-4" />
+            <Search className="h-[22px] w-[22px] sm:h-5 sm:w-5 md:h-5 md:w-5" />
             <span className="sr-only">Search</span>
           </Button>
 
@@ -395,7 +395,7 @@ export default function Navbar() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="ml-1 h-7 w-7 rounded-full hover:bg-primary/5 sm:h-7 sm:w-7 md:h-8 md:w-8"
+                  className="ml-1 h-9 w-9 rounded-full hover:bg-primary/5 sm:h-9 sm:w-9 md:h-9 md:w-9"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -407,7 +407,7 @@ export default function Navbar() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="h-4 w-4 sm:h-4 sm:w-4 md:h-5 md:w-5"
+                    className="h-6 w-6 sm:h-6 sm:w-6 md:h-6 md:w-6"
                   >
                     <line x1="4" y1="6" x2="20" y2="6" />
                     <line x1="4" y1="12" x2="20" y2="12" />
@@ -422,7 +422,7 @@ export default function Navbar() {
               >
                 <div className="border-b px-4 py-3 sm:px-5 sm:py-4">
                   <div className="flex items-center">
-                    <div className="relative h-7 w-7 overflow-hidden rounded-lg sm:h-8 sm:w-8">
+                    <div className="relative h-8 w-8 overflow-hidden rounded-lg sm:h-8 sm:w-8">
                       <Image
                         src={logo}
                         alt="DevOps & Cloud Jobs Portal"
@@ -430,7 +430,7 @@ export default function Navbar() {
                         fill
                       />
                     </div>
-                    <span className="font-heading ml-2 text-sm font-bold tracking-tight sm:text-base">
+                    <span className="font-heading ml-2 text-base font-bold tracking-tight sm:text-base">
                       DevOps & Cloud Jobs
                     </span>
                   </div>
@@ -591,7 +591,7 @@ export default function Navbar() {
         <div className="animate-fadein container overflow-hidden border-t border-border/50 bg-background/95 py-1.5 backdrop-blur-lg sm:py-2 md:py-3">
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="relative flex-1">
-              <Search className="absolute left-2 top-1/2 h-3 w-3 -translate-y-1/2 text-muted-foreground sm:left-2.5 sm:h-3.5 sm:w-3.5 md:left-3 md:h-4 md:w-4" />
+              <Search className="absolute left-2 top-1/2 h-[22px] w-[22px] -translate-y-1/2 text-muted-foreground sm:left-2.5 sm:h-5 sm:w-5 md:left-3 md:h-5 md:w-5" />
               <Input
                 type="text"
                 placeholder="Search for jobs, companies, or keywords..."
