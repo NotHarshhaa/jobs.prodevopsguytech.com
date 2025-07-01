@@ -1,0 +1,133 @@
+/*
+ * mobile-compact.css
+ * This file contains mobile-only adjustments to make the homepage more compact
+ * These styles only affect mobile devices and won't change desktop appearance
+ */
+
+@media (max-width: 767px) {
+  /* Hero section adjustments */
+  .hero-section {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  /* Reduce top spacing */
+  .mx-auto.max-w-7xl.px-6.py-24 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  /* Reduce hero font sizes */
+  .font-heading.text-5xl {
+    font-size: 2.5rem !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Reduce subtitle spacing */
+  .mt-6.text-xl {
+    margin-top: 0.75rem !important;
+    font-size: 1.125rem !important;
+  }
+
+  /* Make search bar more compact */
+  .group.relative.mt-10 {
+    margin-top: 1rem !important;
+  }
+
+  /* Reduce input field padding */
+  .py-6.pl-10.pr-4.text-lg {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+    font-size: 1rem !important;
+  }
+
+  /* Reduce job stats spacing */
+  .mt-10.grid {
+    margin-top: 1rem !important;
+    gap: 0.5rem !important;
+  }
+
+  /* Make company logos section more compact */
+  .container.mx-auto.px-6.pb-20 {
+    padding-bottom: 1.5rem !important;
+  }
+
+  /* Features section adjustments */
+  section.relative.overflow-hidden.py-24,
+  section.relative.py-24 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  /* Reduce feature card padding */
+  .relative.flex.h-full.flex-col.rounded-2xl {
+    padding: 1rem !important;
+  }
+
+  /* Reduce heading spacing in features */
+  .mx-auto.mb-20.max-w-3xl.text-center {
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* Make feature titles smaller */
+  .mb-2.text-xl {
+    font-size: 1.125rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Reduce icon sizes */
+  .mb-5.inline-flex.h-14.w-14 {
+    height: 2.5rem !important;
+    width: 2.5rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  /* Job categories adjustments */
+  .mb-16.flex.flex-col.items-center.text-center {
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* Make category cards more compact */
+  .relative.flex.h-full.flex-col.rounded-xl {
+    padding: 1rem !important;
+  }
+
+  /* Reduce padding in category badges */
+  .rounded-full.border.border-border\/50 {
+    padding: 0.25rem 0.5rem !important;
+  }
+
+  /* Reduce padding in featured section */
+  .mt-12.space-y-6.rounded-xl {
+    margin-top: 1.5rem !important;
+    padding: 1rem !important;
+  }
+
+  /* Make job result cards more compact */
+  .p-4 {
+    padding: 0.75rem !important;
+  }
+
+  /* Reduce size of call-to-action elements */
+  .mt-6.flex.flex-wrap.gap-2 {
+    margin-top: 1rem !important;
+  }
+
+  /* Reduce spacing between sections */
+  .py-16 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  /* Make sure buttons are properly sized but not too large */
+  .px-8.py-6.text-lg {
+    padding: 0.5rem 1rem !important;
+    font-size: 1rem !important;
+  }
+
+  /* Adjust featured technology section */
+  .relative.mt-20.overflow-hidden.rounded-2xl {
+    margin-top: 1.5rem !important;
+    padding: 1rem !important;
+  }
+}

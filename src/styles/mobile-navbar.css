@@ -1,0 +1,120 @@
+/*
+ * mobile-navbar.css
+ * This file contains mobile-only adjustments to make the navbar and navigation more compact
+ * These styles only affect mobile devices and won't change desktop appearance
+ */
+
+@media (max-width: 767px) {
+  /* Reduce overall navbar height */
+  nav.container.flex.h-16 {
+    height: 3.5rem !important; /* 56px instead of 64px */
+  }
+
+  /* Reduce logo size */
+  .relative.h-9.w-9 {
+    height: 2rem !important;
+    width: 2rem !important;
+  }
+
+  /* Adjust logo text size and spacing */
+  .font-heading.text-base.font-bold {
+    font-size: 0.875rem !important;
+  }
+
+  /* Reduce padding in the navbar */
+  .container.flex.h-16.max-w-7xl.items-center.justify-between.px-4 {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  /* Make action buttons more compact */
+  .h-8.w-8.rounded-full {
+    height: 1.75rem !important;
+    width: 1.75rem !important;
+  }
+
+  /* Adjust button spacing */
+  .flex.items-center.gap-2 {
+    gap: 0.25rem !important;
+  }
+
+  /* Make sign-in and get-started buttons more compact */
+  .rounded-full.text-sm.font-medium {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  /* Make navigation menu more compact in mobile sidebar */
+  .flex.flex-col.px-2.py-4 {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+
+  /* Reduce padding in mobile menu items */
+  .flex.items-center.rounded-lg.px-3.py-2 {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+
+  /* Make dropdown menu content more compact */
+  .rounded-xl.p-0 {
+    border-radius: 0.5rem !important;
+  }
+
+  /* Reduce padding in dropdown menu sections */
+  .border-b.px-5.py-4 {
+    padding: 0.75rem !important;
+  }
+
+  /* Reduce dropdown menu item padding */
+  .cursor-pointer.rounded-lg {
+    padding: 0.5rem 0.75rem !important;
+  }
+
+  /* Reduce spacing in search panel */
+  .animate-fadein.container.overflow-hidden.border-t.border-border\/50.bg-background\/95.py-3 {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+
+  /* Make search input more compact */
+  .h-9.w-full.rounded-full {
+    height: 2rem !important;
+    font-size: 0.875rem !important;
+  }
+
+  /* Reduce cancel button size */
+  .h-9.rounded-full {
+    height: 2rem !important;
+    font-size: 0.75rem !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  /* Reduce shadow and border effect when scrolled */
+  .border-b.bg-background\/95.shadow-sm {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  /* Adjust mobile menu sheet */
+  .w-80.p-0 {
+    width: 16rem !important; /* 256px instead of 320px */
+  }
+
+  /* Fix menu icon display */
+  svg.lucide-menu {
+    display: inline-block !important;
+    stroke: currentColor !important;
+    stroke-width: 2 !important;
+    fill: none !important;
+    vertical-align: middle !important;
+  }
+
+  /* Ensure menu button displays icon properly */
+  button[class*="rounded-full"] svg {
+    display: inline-block !important;
+    height: 1rem !important;
+    width: 1rem !important;
+  }
+}

@@ -21,32 +21,30 @@ interface ConfirmDialogProps {
   variant?: "default" | "destructive";
 }
 
-export default function ConfirmDialog({
+function ConfirmDialog({
   children,
   title,
   description,
   onConfirm,
-  variant = "default"
+  variant = "default",
 }: ConfirmDialogProps) {
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        {children}
-      </AlertDialogTrigger>
+      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
           {description && (
-            <AlertDialogDescription>
-              {description}
-            </AlertDialogDescription>
+            <AlertDialogDescription>{description}</AlertDialogDescription>
           )}
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={onConfirm}
-            className={variant === "destructive" ? "bg-red-600 hover:bg-red-700" : ""}
+            className={
+              variant === "destructive" ? "bg-red-600 hover:bg-red-700" : ""
+            }
           >
             Continue
           </AlertDialogAction>
@@ -54,4 +52,6 @@ export default function ConfirmDialog({
       </AlertDialogContent>
     </AlertDialog>
   );
-} 
+}
+
+export default ConfirmDialog;

@@ -1,0 +1,118 @@
+/*
+ * menu-dropdown-fix.css
+ * This file contains fixes for the Resources dropdown menu in the navbar
+ */
+
+/* Fix for resources dropdown menu */
+@media (min-width: 768px) {
+  /* Ensure proper positioning of navigation menu content */
+  .radix-navigation-menu [data-radix-navigation-menu-content] {
+    transform-origin: var(--radix-popper-transform-origin);
+    animation: scale-in 0.2s ease-out;
+  }
+
+  /* Ensure dropdown appears correctly */
+  [data-radix-navigation-menu-viewport] {
+    width: auto !important;
+    min-width: var(--radix-navigation-menu-viewport-width) !important;
+    max-width: 550px !important;
+    border-radius: 0.75rem !important;
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+    border: 1px solid hsl(var(--border)) !important;
+    overflow: hidden !important;
+    transform: translateX(-15%) !important;
+  }
+
+  /* Fix for grid layout in dropdown */
+  .resources-dropdown-content > div:last-child {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  /* Set dimensions for each dropdown item */
+  .navigation-menu-item {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Ensure dropdown items have proper spacing */
+  .navigation-menu-content .block {
+    padding: 0.75rem !important;
+    border-radius: 0.5rem !important;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease !important;
+    height: 100% !important;
+  }
+
+  /* Fix dropdown content positioning */
+  [data-radix-navigation-menu-root] {
+    position: relative !important;
+  }
+
+  /* Ensure the dropdown content container has proper dimensions */
+  .resources-dropdown-content {
+    width: 520px !important;
+    padding: 1rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: visible !important;
+  }
+
+  /* Fix for menu items inside the dropdown */
+  .resources-dropdown-content a {
+    display: block !important;
+    text-decoration: none !important;
+    width: 100% !important;
+  }
+
+  /* Fix for hover states */
+  .resources-dropdown-content a:hover {
+    background-color: hsl(var(--accent)) !important;
+    color: hsl(var(--accent-foreground)) !important;
+  }
+
+  /* Ensure icons are properly sized and positioned */
+  .navigation-menu-item .rounded-md {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    flex-shrink: 0 !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  }
+
+  /* Ensure the description text is properly sized */
+  .navigation-menu-item p {
+    margin-top: 4px !important;
+    color: hsl(var(--muted-foreground)) !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* Style the navigation menu header */
+  .resources-dropdown-content > div:first-child {
+    margin-bottom: 10px !important;
+    padding-bottom: 8px !important;
+  }
+}
+
+/* Animation for dropdown appearance */
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

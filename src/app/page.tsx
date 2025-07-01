@@ -12,12 +12,13 @@ interface PageProps {
     location?: string;
     remote?: string;
     page?: string;
-  }
+  };
 }
 
 export const metadata: Metadata = {
   title: "DevOps & Cloud Jobs Portal | Find Your Next Career Opportunity",
-  description: "Find the best DevOps and cloud computing jobs. Connect with top companies hiring DevOps engineers, SRE, and cloud professionals.",
+  description:
+    "Find the best DevOps and cloud computing jobs. Connect with top companies hiring DevOps engineers, SRE, and cloud professionals.",
 };
 
 export default async function Home({
@@ -39,6 +40,7 @@ export default async function Home({
         <JobResults
           filterValues={filterValues}
           page={page ? parseInt(page) : undefined}
+          jobs={[]}
         />
       </div>
     </main>

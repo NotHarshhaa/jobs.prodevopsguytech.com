@@ -6,11 +6,17 @@ interface LocationInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   onLocationSelected: (location: string) => void;
   defaultValue?: string;
+  className?: string;
 }
 
 export default forwardRef<HTMLInputElement, LocationInputProps>(
-  function LocationInput({ onLocationSelected, defaultValue, ...props }, ref) {
-    const [locationSearchInput, setLocationSearchInput] = useState(defaultValue || "");
+  function LocationInput(
+    { onLocationSelected, defaultValue, className, ...props },
+    ref,
+  ) {
+    const [locationSearchInput, setLocationSearchInput] = useState(
+      defaultValue || "",
+    );
     const [hasFocus, setHasFocus] = useState(false);
 
     useEffect(() => {
@@ -53,17 +59,16 @@ export default forwardRef<HTMLInputElement, LocationInputProps>(
           onBlur={(e) => {
             // Check if the related target is one of our location buttons
             const relatedTarget = e.relatedTarget as HTMLElement;
-            if (!relatedTarget?.classList.contains('location-button')) {
+            if (!relatedTarget?.classList.contains("location-button")) {
               setHasFocus(false);
             }
           }}
+          className={className}
           {...props}
           ref={ref}
         />
         {locationSearchInput.trim() && hasFocus && (
-          <div 
-            className="absolute z-20 w-full divide-y rounded-b-lg border-x border-b bg-background shadow-xl"
-          >
+          <div className="absolute z-20 w-full divide-y rounded-b-lg border-x border-b bg-background shadow-xl">
             {!cities.length && <p className="p-3">No results found.</p>}
             {cities.map((city) => (
               <button

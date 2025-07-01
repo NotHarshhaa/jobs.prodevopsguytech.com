@@ -1,0 +1,37 @@
+/*
+ * menu-icon-fix.css
+ * This file contains a targeted fix for the mobile menu icon display issue
+ */
+
+/* Fix for mobile menu hamburger icon appearing as a dot */
+@media (max-width: 767px) {
+  /* Ensure menu icon SVG is properly displayed */
+  .md\:hidden button svg,
+  button svg.lucide-menu {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    height: 1rem !important;
+    width: 1rem !important;
+    stroke: currentColor !important;
+    stroke-width: 2px !important;
+    fill: none !important;
+  }
+
+  /* Manually define hamburger menu icon as a fallback */
+  .md\:hidden button svg:not([class*="lucide-"]),
+  button svg.lucide-menu:not(:is(path, line)) {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='4' x2='20' y1='12' y2='12'%3E%3C/line%3E%3Cline x1='4' x2='20' y1='6' y2='6'%3E%3C/line%3E%3Cline x1='4' x2='20' y1='18' y2='18'%3E%3C/line%3E%3C/svg%3E");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  /* Ensure button maintains proper dimensions */
+  .md\:hidden button[class*="rounded-full"] {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 1.75rem !important;
+    min-height: 1.75rem !important;
+  }
+}
