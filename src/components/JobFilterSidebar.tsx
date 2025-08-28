@@ -40,13 +40,16 @@ export default function JobFilterSidebar({ defaultValues }: JobFilterSidebarProp
 
   useEffect(() => {
     setIsClient(true);
+    // Always show filters on desktop
+    if (window.innerWidth >= 1024) {
+      setIsOpen(true);
+    }
   }, []);
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setSubmitted(true);
     setTimeout(() => {
-      setIsOpen(false);
       setSubmitted(false);
     }, 500);
   };
@@ -72,7 +75,8 @@ export default function JobFilterSidebar({ defaultValues }: JobFilterSidebarProp
         </button>
       </div>
 
-      {(isClient && (isOpen || window.innerWidth >= 1024)) && (
+      {/* Filter Content - Always show on desktop, conditional on mobile */}
+      <div className={`${isClient && (isOpen || window.innerWidth >= 1024) ? 'block' : 'hidden lg:block'}`}>
         <div className="p-6">
           <div className="mb-6">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Refine Your Search</h3>
@@ -167,7 +171,7 @@ export default function JobFilterSidebar({ defaultValues }: JobFilterSidebarProp
             </div>
           </div>
         </div>
-      )}
+      </div>
     </aside>
   );
 }

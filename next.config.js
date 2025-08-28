@@ -118,9 +118,6 @@ const nextConfig = {
     ignoreDuringBuilds: false,
   },
   
-  // Output configuration
-  output: 'standalone',
-  
   // Trailing slash
   trailingSlash: false,
   
